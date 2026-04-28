@@ -29,3 +29,15 @@ export type ApplyUrl = z.infer<typeof ApplyUrlSchema>;
  * Type inference from ListingIdSchema for type safety
  */
 export type ListingId = z.infer<typeof ListingIdSchema>;
+
+/**
+ * Usage Notes:
+ * 
+ * ListingIdSchema: Used in all route handlers that accept [id] path parameters
+ * (e.g., app/api/jobs/[id]/route.ts) to validate the UUID before processing.
+ * 
+ * ApplyUrlSchema: Used in client-side React components (e.g., ApplyButton)
+ * and server components to validate apply_url before rendering the apply link.
+ * Server-side validation in page components is for logging/telemetry;
+ * client-side validation in ApplyButton is the authoritative render gate.
+ */

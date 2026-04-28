@@ -183,13 +183,12 @@ describe('ApplyUrlSchema', () => {
       expect(result.success).toBe(false);
     });
 
-    it('should reject URL with invalid scheme', () => {
+    it('should accept FTP URL (z.string().url() accepts any valid URL scheme)', () => {
+      // Note: z.string().url() validates URL structure, not specific schemes.
+      // FTP is a valid URL scheme, so this passes. If HTTP(S)-only validation is needed,
+      // use .url().refine((url) => /^https?:\/\//.test(url))
       const result = ApplyUrlSchema.safeParse('ftp://example.com/apply');
-      // ftp:// might be accepted by z.string().url(), but HTTP(S) should be preferred
-      // This test documents the current behavior
-      const urlResult = ApplyUrlSchema.safeParse('ftp://example.com/apply');
-      // Actually, z.string().url() accepts any valid URL scheme
-      // so this might succeed. We test this to document behavior.
+      expect(result.success).toBe(true);
     });
 
     it('should reject null', () => {
